@@ -1,1188 +1,1293 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>廖昱豪 · GIS 空間資料 × 前端開發 | 個人履歷網站</title>
-  <meta name="description" content="廖昱豪的個人履歷網站，地球科學系背景，具備 GIS 空間分析、QGIS、前端開發與自學能力，展示作品集、學經歷與聯絡方式。" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>廖昱豪 · GIS 空間資料 × 前端開發 | 個人履歷網站</title>
+    <meta
+      name="description"
+      content="廖昱豪的個人履歷網站，地球科學系背景，具備 GIS 空間分析、QGIS、前端開發與自學能力，展示作品集、學經歷與聯絡方式。"
+    />
 
-  <style>
-
-    /* ═══════════════════════════════════════════════════
+    <style>
+      /* ═══════════════════════════════════════════════════
        CSS:BASE-START
        全站基底樣式 — 禁止使用 ID 選擇器（#xxx）
     ═══════════════════════════════════════════════════ */
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    :root {
-      --color-bg:          #1a1208;
-      --color-bg-alt:      #211608;
-      --color-bg-card:     #2a1e0f;
-      --color-bg-card-alt: #321f0b;
-      --color-accent:      #c8882a;
-      --color-accent-lt:   #e8a84a;
-      --color-accent-glow: rgba(200,136,42,0.15);
-      --color-cream:       #f0e8d8;
-      --color-text:        #ddd0bb;
-      --color-text-muted:  #8a7a62;
-      --color-border:      rgba(200,136,42,0.22);
-      --color-line:        rgba(255,240,200,0.07);
-      --color-grain:       rgba(240,220,180,0.03);
+      :root {
+        --color-bg: #1a1208;
+        --color-bg-alt: #211608;
+        --color-bg-card: #2a1e0f;
+        --color-bg-card-alt: #321f0b;
+        --color-accent: #c8882a;
+        --color-accent-lt: #e8a84a;
+        --color-accent-glow: rgba(200, 136, 42, 0.15);
+        --color-cream: #f0e8d8;
+        --color-text: #ddd0bb;
+        --color-text-muted: #8a7a62;
+        --color-border: rgba(200, 136, 42, 0.22);
+        --color-line: rgba(255, 240, 200, 0.07);
+        --color-grain: rgba(240, 220, 180, 0.03);
 
-      --font-sans: 'Helvetica Neue','Segoe UI','PingFang TC','Microsoft JhengHei',sans-serif;
-      --font-mono: 'Menlo','Consolas','Courier New',monospace;
+        --font-sans:
+          "Helvetica Neue", "Segoe UI", "PingFang TC", "Microsoft JhengHei",
+          sans-serif;
+        --font-mono: "Menlo", "Consolas", "Courier New", monospace;
 
-      --space-xs:  0.5rem;
-      --space-sm:  1rem;
-      --space-md:  2rem;
-      --space-lg:  4rem;
-      --space-xl:  7rem;
+        --space-xs: 0.5rem;
+        --space-sm: 1rem;
+        --space-md: 2rem;
+        --space-lg: 4rem;
+        --space-xl: 7rem;
 
-      --radius-sm: 5px;
-      --radius-md: 10px;
-      --radius-lg: 18px;
+        --radius-sm: 5px;
+        --radius-md: 10px;
+        --radius-lg: 18px;
 
-      --shadow-card:   0 6px 36px rgba(0,0,0,0.55);
-      --shadow-accent: 0 0 28px rgba(200,136,42,0.18);
-      --transition:    0.28s cubic-bezier(0.4,0,0.2,1);
-    }
+        --shadow-card: 0 6px 36px rgba(0, 0, 0, 0.55);
+        --shadow-accent: 0 0 28px rgba(200, 136, 42, 0.18);
+        --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
-    html { scroll-behavior: smooth; }
+      html {
+        scroll-behavior: smooth;
+      }
 
-    body {
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      font-family: var(--font-sans);
-      font-size: 1rem;
-      line-height: 1.78;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.78;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
 
-    /* 細膩噪點紋理疊層 */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        0deg,
-        transparent, transparent 2px,
-        var(--color-grain) 2px, var(--color-grain) 4px
-      );
-      pointer-events: none;
-      z-index: 9999;
-    }
+      /* 細膩噪點紋理疊層 */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          var(--color-grain) 2px,
+          var(--color-grain) 4px
+        );
+        pointer-events: none;
+        z-index: 9999;
+      }
 
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
 
-    a {
-      color: var(--color-accent);
-      text-decoration: none;
-      transition: color var(--transition);
-    }
-    a:hover { color: var(--color-accent-lt); }
+      a {
+        color: var(--color-accent);
+        text-decoration: none;
+        transition: color var(--transition);
+      }
+      a:hover {
+        color: var(--color-accent-lt);
+      }
 
-    .page {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+      .page {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
 
-    .container {
-      width: 100%;
-      max-width: 1080px;
-      margin-inline: auto;
-      padding-inline: var(--space-sm);
-    }
+      .container {
+        width: 100%;
+        max-width: 1080px;
+        margin-inline: auto;
+        padding-inline: var(--space-sm);
+      }
 
-    .section { padding-block: var(--space-lg); }
+      .section {
+        padding-block: var(--space-lg);
+      }
 
-    .section-eyebrow {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      border: 1px solid var(--color-border);
-      border-radius: 99px;
-      padding: 0.25em 0.9em;
-      margin-bottom: 0.85rem;
-    }
+      .section-eyebrow {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        border: 1px solid var(--color-border);
+        border-radius: 99px;
+        padding: 0.25em 0.9em;
+        margin-bottom: 0.85rem;
+      }
 
-    .section-title {
-      font-size: clamp(1.55rem, 4vw, 2.3rem);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      color: var(--color-cream);
-      margin-bottom: var(--space-md);
-      position: relative;
-      display: inline-block;
-    }
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 2.5px;
-      background: var(--color-accent);
-      border-radius: 2px;
-      margin-top: 0.4em;
-    }
+      .section-title {
+        font-size: clamp(1.55rem, 4vw, 2.3rem);
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: var(--color-cream);
+        margin-bottom: var(--space-md);
+        position: relative;
+        display: inline-block;
+      }
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 2.5px;
+        background: var(--color-accent);
+        border-radius: 2px;
+        margin-top: 0.4em;
+      }
 
-    .btn {
-      display: inline-block;
-      padding: 0.6em 1.5em;
-      border-radius: var(--radius-sm);
-      font-size: 0.82rem;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      letter-spacing: 0.04em;
-      transition: all var(--transition);
-      cursor: pointer;
-    }
-    .btn-primary {
-      background: var(--color-accent);
-      color: #1a1208;
-    }
-    .btn-primary:hover {
-      background: var(--color-accent-lt);
-      color: #1a1208;
-      box-shadow: 0 0 20px rgba(200,136,42,0.4);
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--color-accent);
-      border: 1.5px solid var(--color-border);
-    }
-    .btn-ghost:hover {
-      border-color: var(--color-accent-lt);
-      color: var(--color-accent-lt);
-      background: var(--color-accent-glow);
-    }
-    .btn-sm {
-      font-size: 0.75rem;
-      padding: 0.45em 1.1em;
-    }
+      .btn {
+        display: inline-block;
+        padding: 0.6em 1.5em;
+        border-radius: var(--radius-sm);
+        font-size: 0.82rem;
+        font-weight: 700;
+        font-family: var(--font-mono);
+        letter-spacing: 0.04em;
+        transition: all var(--transition);
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--color-accent);
+        color: #1a1208;
+      }
+      .btn-primary:hover {
+        background: var(--color-accent-lt);
+        color: #1a1208;
+        box-shadow: 0 0 20px rgba(200, 136, 42, 0.4);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--color-accent);
+        border: 1.5px solid var(--color-border);
+      }
+      .btn-ghost:hover {
+        border-color: var(--color-accent-lt);
+        color: var(--color-accent-lt);
+        background: var(--color-accent-glow);
+      }
+      .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.45em 1.1em;
+      }
 
-    /* CSS:BASE-END */
+      /* CSS:BASE-END */
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        NAV
     ═══════════════════════════════════════════════════ */
 
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(26,18,8,0.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--color-line);
-    }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(26, 18, 8, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--color-line);
+      }
 
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 58px;
-      gap: var(--space-sm);
-    }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 58px;
+        gap: var(--space-sm);
+      }
 
-    .nav-logo {
-      font-size: 0.88rem;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      color: var(--color-cream);
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-    }
-    .nav-logo span { color: var(--color-accent); }
+      .nav-logo {
+        font-size: 0.88rem;
+        font-weight: 700;
+        font-family: var(--font-mono);
+        color: var(--color-cream);
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+      }
+      .nav-logo span {
+        color: var(--color-accent);
+      }
 
-    .nav-links {
-      display: none;
-      list-style: none;
-      align-items: center;
-      gap: 1.6rem;
-    }
+      .nav-links {
+        display: none;
+        list-style: none;
+        align-items: center;
+        gap: 1.6rem;
+      }
 
-    .nav-link {
-      font-size: 0.8rem;
-      font-family: var(--font-mono);
-      letter-spacing: 0.06em;
-      color: var(--color-text-muted);
-      padding-bottom: 2px;
-      border-bottom: 1.5px solid transparent;
-      transition: color var(--transition), border-color var(--transition);
-    }
-    .nav-link:hover {
-      color: var(--color-accent-lt);
-      border-bottom-color: var(--color-accent);
-    }
+      .nav-link {
+        font-size: 0.8rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.06em;
+        color: var(--color-text-muted);
+        padding-bottom: 2px;
+        border-bottom: 1.5px solid transparent;
+        transition:
+          color var(--transition),
+          border-color var(--transition);
+      }
+      .nav-link:hover {
+        color: var(--color-accent-lt);
+        border-bottom-color: var(--color-accent);
+      }
 
-    .nav-cta { display: none; }
+      .nav-cta {
+        display: none;
+      }
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        CSS:HERO-START
        Hero 區樣式 — 禁止使用 ID 選擇器（#xxx）
     ═══════════════════════════════════════════════════ */
 
-    .section-hero {
-      position: relative;
-      min-height: 90vh;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      padding-block: var(--space-xl);
-    }
+      .section-hero {
+        position: relative;
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        padding-block: var(--space-xl);
+      }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-    .hero-bg-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 50%;
-      opacity: 0.12;
-      filter: sepia(60%) saturate(60%);
-    }
-    .hero-bg-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        150deg,
-        rgba(26,18,8,0.98) 0%,
-        rgba(26,18,8,0.80) 55%,
-        rgba(50,30,10,0.65) 100%
-      );
-    }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .hero-bg-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 50%;
+        opacity: 0.12;
+        filter: sepia(60%) saturate(60%);
+      }
+      .hero-bg-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          150deg,
+          rgba(26, 18, 8, 0.98) 0%,
+          rgba(26, 18, 8, 0.8) 55%,
+          rgba(50, 30, 10, 0.65) 100%
+        );
+      }
 
-    .hero-glow {
-      position: absolute;
-      top: 5%;
-      right: -10%;
-      width: 480px;
-      height: 480px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,136,42,0.10) 0%, transparent 68%);
-      pointer-events: none;
-    }
+      .hero-glow {
+        position: absolute;
+        top: 5%;
+        right: -10%;
+        width: 480px;
+        height: 480px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(200, 136, 42, 0.1) 0%,
+          transparent 68%
+        );
+        pointer-events: none;
+      }
 
-    .hero-corner {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      pointer-events: none;
-    }
-    .hero-corner-tl {
-      top: 24px; left: 24px;
-      border-top: 1.5px solid var(--color-accent);
-      border-left: 1.5px solid var(--color-accent);
-      opacity: 0.5;
-    }
-    .hero-corner-br {
-      bottom: 24px; right: 24px;
-      border-bottom: 1.5px solid var(--color-accent);
-      border-right: 1.5px solid var(--color-accent);
-      opacity: 0.5;
-    }
+      .hero-corner {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        pointer-events: none;
+      }
+      .hero-corner-tl {
+        top: 24px;
+        left: 24px;
+        border-top: 1.5px solid var(--color-accent);
+        border-left: 1.5px solid var(--color-accent);
+        opacity: 0.5;
+      }
+      .hero-corner-br {
+        bottom: 24px;
+        right: 24px;
+        border-bottom: 1.5px solid var(--color-accent);
+        border-right: 1.5px solid var(--color-accent);
+        opacity: 0.5;
+      }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 720px;
-    }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 720px;
+      }
 
-    .hero-eyebrow {
-      font-size: 0.72rem;
-      font-family: var(--font-mono);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 28px;
-      height: 1.5px;
-      background: var(--color-accent);
-      flex-shrink: 0;
-    }
+      .hero-eyebrow {
+        font-size: 0.72rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        margin-bottom: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 28px;
+        height: 1.5px;
+        background: var(--color-accent);
+        flex-shrink: 0;
+      }
 
-    .hero-title {
-      font-size: clamp(2.2rem, 6.5vw, 4.2rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      color: var(--color-cream);
-      margin-bottom: var(--space-sm);
-    }
-    .hero-title-accent { color: var(--color-accent); }
+      .hero-title {
+        font-size: clamp(2.2rem, 6.5vw, 4.2rem);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        color: var(--color-cream);
+        margin-bottom: var(--space-sm);
+      }
+      .hero-title-accent {
+        color: var(--color-accent);
+      }
 
-    .hero-sub {
-      font-size: clamp(0.9rem, 2vw, 1.05rem);
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-md);
-      max-width: 500px;
-      line-height: 1.85;
-    }
+      .hero-sub {
+        font-size: clamp(0.9rem, 2vw, 1.05rem);
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-md);
+        max-width: 500px;
+        line-height: 1.85;
+      }
 
-    .hero-bookmark-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin-bottom: var(--space-md);
-    }
+      .hero-bookmark-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-bottom: var(--space-md);
+      }
 
-    .hero-bookmark {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.76rem;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: var(--color-cream);
-      background: var(--color-bg-card);
-      border: 1px solid var(--color-line);
-      border-top: 2.5px solid var(--color-accent);
-      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-      padding: 0.45em 1em;
-      transition: all var(--transition);
-    }
-    .hero-bookmark:hover {
-      background: var(--color-bg-card-alt);
-      border-color: var(--color-accent);
-      border-top-color: var(--color-accent-lt);
-      color: var(--color-accent-lt);
-    }
+      .hero-bookmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.76rem;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--color-cream);
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-line);
+        border-top: 2.5px solid var(--color-accent);
+        border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+        padding: 0.45em 1em;
+        transition: all var(--transition);
+      }
+      .hero-bookmark:hover {
+        background: var(--color-bg-card-alt);
+        border-color: var(--color-accent);
+        border-top-color: var(--color-accent-lt);
+        color: var(--color-accent-lt);
+      }
 
-    .hero-tagline {
-      font-size: 0.8rem;
-      font-family: var(--font-mono);
-      color: var(--color-text-muted);
-      border-left: 2px solid var(--color-accent);
-      padding-left: 0.85em;
-      line-height: 1.6;
-      font-style: italic;
-    }
+      .hero-tagline {
+        font-size: 0.8rem;
+        font-family: var(--font-mono);
+        color: var(--color-text-muted);
+        border-left: 2px solid var(--color-accent);
+        padding-left: 0.85em;
+        line-height: 1.6;
+        font-style: italic;
+      }
 
-    /* CSS:HERO-END */
+      /* CSS:HERO-END */
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        CSS:ABOUT-START
        About 區樣式 — 禁止使用 ID 選擇器（#xxx）
     ═══════════════════════════════════════════════════ */
 
-    .section-about {
-      background: var(--color-bg-alt);
-      border-top: 1px solid var(--color-line);
-      border-bottom: 1px solid var(--color-line);
-    }
+      .section-about {
+        background: var(--color-bg-alt);
+        border-top: 1px solid var(--color-line);
+        border-bottom: 1px solid var(--color-line);
+      }
 
-    .about-grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-md);
-    }
+      .about-grid {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+      }
 
-    .about-img-wrap {
-      width: 100%;
-      max-width: 360px;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--color-border);
-      box-shadow: var(--shadow-accent);
-      position: relative;
-      align-self: flex-start;
-    }
-    .about-img-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 50%, rgba(26,18,8,0.7) 100%);
-      pointer-events: none;
-    }
-    .about-img-wrap img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      filter: sepia(25%) saturate(80%);
-    }
+      .about-img-wrap {
+        width: 100%;
+        max-width: 360px;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-accent);
+        position: relative;
+        align-self: flex-start;
+      }
+      .about-img-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 50%,
+          rgba(26, 18, 8, 0.7) 100%
+        );
+        pointer-events: none;
+      }
+      .about-img-wrap img {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        filter: sepia(25%) saturate(80%);
+      }
 
-    .about-text-block p {
-      color: var(--color-text-muted);
-      margin-bottom: 0.9em;
-      line-height: 1.85;
-    }
-    .about-text-block p strong {
-      color: var(--color-text);
-      font-weight: 600;
-    }
+      .about-text-block p {
+        color: var(--color-text-muted);
+        margin-bottom: 0.9em;
+        line-height: 1.85;
+      }
+      .about-text-block p strong {
+        color: var(--color-text);
+        font-weight: 600;
+      }
 
-    .about-divider {
-      width: 100%;
-      height: 1px;
-      background: var(--color-line);
-      margin-block: var(--space-sm);
-    }
+      .about-divider {
+        width: 100%;
+        height: 1px;
+        background: var(--color-line);
+        margin-block: var(--space-sm);
+      }
 
-    .about-meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
+      .about-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
 
-    .about-meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2em;
-    }
-    .about-meta-label {
-      font-size: 0.66rem;
-      font-family: var(--font-mono);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-    .about-meta-value {
-      font-size: 0.88rem;
-      color: var(--color-cream);
-      font-weight: 600;
-    }
+      .about-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2em;
+      }
+      .about-meta-label {
+        font-size: 0.66rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+      .about-meta-value {
+        font-size: 0.88rem;
+        color: var(--color-cream);
+        font-weight: 600;
+      }
 
-    /* CSS:ABOUT-END */
+      /* CSS:ABOUT-END */
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        CSS:SKILLS-START
        Skills 區樣式 — 禁止使用 ID 選擇器（#xxx）
     ═══════════════════════════════════════════════════ */
 
-    .section-skills { background: var(--color-bg); }
+      .section-skills {
+        background: var(--color-bg);
+      }
 
-    .skill-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-sm);
-    }
+      .skill-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
 
-    .skill-card {
-      background: var(--color-bg-card);
-      border: 1px solid var(--color-line);
-      border-left: 3px solid var(--color-accent);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      padding: var(--space-sm) var(--space-md);
-      transition: border-color var(--transition), box-shadow var(--transition);
-    }
-    .skill-card:hover {
-      border-left-color: var(--color-accent-lt);
-      box-shadow: var(--shadow-accent);
-    }
+      .skill-card {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-line);
+        border-left: 3px solid var(--color-accent);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        padding: var(--space-sm) var(--space-md);
+        transition:
+          border-color var(--transition),
+          box-shadow var(--transition);
+      }
+      .skill-card:hover {
+        border-left-color: var(--color-accent-lt);
+        box-shadow: var(--shadow-accent);
+      }
 
-    .skill-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.75em;
-    }
-    .skill-card-icon { font-size: 1.1rem; }
-    .skill-card-title {
-      font-size: 0.78rem;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      color: var(--color-accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+      .skill-card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.75em;
+      }
+      .skill-card-icon {
+        font-size: 1.1rem;
+      }
+      .skill-card-title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        font-family: var(--font-mono);
+        color: var(--color-accent);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
 
-    .skill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4em;
-      list-style: none;
-    }
-    .skill-item {
-      font-size: 0.78rem;
-      font-family: var(--font-mono);
-      color: var(--color-text-muted);
-      background: rgba(255,240,200,0.04);
-      border: 1px solid var(--color-line);
-      border-radius: 4px;
-      padding: 0.2em 0.65em;
-      line-height: 1.5;
-    }
-    .skill-item-highlight {
-      color: var(--color-cream);
-      border-color: var(--color-border);
-      background: var(--color-accent-glow);
-    }
+      .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4em;
+        list-style: none;
+      }
+      .skill-item {
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        color: var(--color-text-muted);
+        background: rgba(255, 240, 200, 0.04);
+        border: 1px solid var(--color-line);
+        border-radius: 4px;
+        padding: 0.2em 0.65em;
+        line-height: 1.5;
+      }
+      .skill-item-highlight {
+        color: var(--color-cream);
+        border-color: var(--color-border);
+        background: var(--color-accent-glow);
+      }
 
-    /* CSS:SKILLS-END */
+      /* CSS:SKILLS-END */
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        CSS:PROJECTS-START
        Projects 區樣式 — 禁止使用 ID 選擇器（#xxx）
     ═══════════════════════════════════════════════════ */
 
-    .section-projects {
-      background: var(--color-bg-alt);
-      border-top: 1px solid var(--color-line);
-      border-bottom: 1px solid var(--color-line);
-    }
+      .section-projects {
+        background: var(--color-bg-alt);
+        border-top: 1px solid var(--color-line);
+        border-bottom: 1px solid var(--color-line);
+      }
 
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-sm);
-    }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
 
-    .project-card {
-      background: var(--color-bg-card);
-      border: 1px solid var(--color-line);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
-    }
-    .project-card:hover {
-      border-color: var(--color-border);
-      box-shadow: var(--shadow-accent);
-      transform: translateY(-3px);
-    }
+      .project-card {
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+          border-color var(--transition),
+          box-shadow var(--transition),
+          transform var(--transition);
+      }
+      .project-card:hover {
+        border-color: var(--color-border);
+        box-shadow: var(--shadow-accent);
+        transform: translateY(-3px);
+      }
 
-    .project-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      filter: sepia(20%) saturate(70%);
-      opacity: 0.82;
-      transition: opacity var(--transition), filter var(--transition);
-    }
-    .project-card:hover .project-thumb {
-      opacity: 1;
-      filter: sepia(10%) saturate(90%);
-    }
+      .project-thumb {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        filter: sepia(20%) saturate(70%);
+        opacity: 0.82;
+        transition:
+          opacity var(--transition),
+          filter var(--transition);
+      }
+      .project-card:hover .project-thumb {
+        opacity: 1;
+        filter: sepia(10%) saturate(90%);
+      }
 
-    .project-info {
-      padding: var(--space-sm) var(--space-md);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+      .project-info {
+        padding: var(--space-sm) var(--space-md);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
 
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35em;
-      margin-bottom: 0.55em;
-    }
-    .project-tag {
-      font-size: 0.68rem;
-      font-family: var(--font-mono);
-      color: var(--color-accent);
-      background: var(--color-accent-glow);
-      border-radius: 3px;
-      padding: 0.15em 0.55em;
-      letter-spacing: 0.05em;
-    }
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35em;
+        margin-bottom: 0.55em;
+      }
+      .project-tag {
+        font-size: 0.68rem;
+        font-family: var(--font-mono);
+        color: var(--color-accent);
+        background: var(--color-accent-glow);
+        border-radius: 3px;
+        padding: 0.15em 0.55em;
+        letter-spacing: 0.05em;
+      }
 
-    .project-title {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--color-cream);
-      margin-bottom: 0.4em;
-      letter-spacing: -0.01em;
-    }
+      .project-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--color-cream);
+        margin-bottom: 0.4em;
+        letter-spacing: -0.01em;
+      }
 
-    .project-desc {
-      font-size: 0.83rem;
-      color: var(--color-text-muted);
-      line-height: 1.7;
-      margin-bottom: var(--space-sm);
-      flex: 1;
-    }
+      .project-desc {
+        font-size: 0.83rem;
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        margin-bottom: var(--space-sm);
+        flex: 1;
+      }
 
-    .project-links {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+      .project-links {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        align-items: center;
+      }
 
-    .project-status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3em;
-      font-size: 0.68rem;
-      font-family: var(--font-mono);
-      color: var(--color-text-muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--color-line);
-      border-radius: 99px;
-      padding: 0.25em 0.7em;
-    }
-    .project-status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--color-text-muted);
-    }
-    .project-status-dot.active {
-      background: #6fcf97;
-      box-shadow: 0 0 6px rgba(111,207,151,0.6);
-    }
+      .project-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3em;
+        font-size: 0.68rem;
+        font-family: var(--font-mono);
+        color: var(--color-text-muted);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--color-line);
+        border-radius: 99px;
+        padding: 0.25em 0.7em;
+      }
+      .project-status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--color-text-muted);
+      }
+      .project-status-dot.active {
+        background: #6fcf97;
+        box-shadow: 0 0 6px rgba(111, 207, 151, 0.6);
+      }
 
-    /* CSS:PROJECTS-END */
+      /* CSS:PROJECTS-END */
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        CSS:CONTACT-START
        Contact 區樣式 — 禁止使用 ID 選擇器（#xxx）
     ═══════════════════════════════════════════════════ */
 
-    .section-contact { background: var(--color-bg); }
+      .section-contact {
+        background: var(--color-bg);
+      }
 
-    .contact-wrap { max-width: 600px; }
+      .contact-wrap {
+        max-width: 600px;
+      }
 
-    .contact-intro {
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-md);
-      line-height: 1.85;
-    }
-    .contact-intro strong { color: var(--color-text); }
+      .contact-intro {
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-md);
+        line-height: 1.85;
+      }
+      .contact-intro strong {
+        color: var(--color-text);
+      }
 
-    .contact-list {
-      list-style: none;
-      border: 1px solid var(--color-line);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-    }
+      .contact-list {
+        list-style: none;
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+      }
 
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-sm) var(--space-md);
-      border-bottom: 1px solid var(--color-line);
-      background: var(--color-bg-card);
-      transition: background var(--transition);
-    }
-    .contact-item:last-child { border-bottom: none; }
-    .contact-item:hover { background: var(--color-bg-card-alt); }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
+        border-bottom: 1px solid var(--color-line);
+        background: var(--color-bg-card);
+        transition: background var(--transition);
+      }
+      .contact-item:last-child {
+        border-bottom: none;
+      }
+      .contact-item:hover {
+        background: var(--color-bg-card-alt);
+      }
 
-    .contact-icon {
-      font-size: 1.1rem;
-      width: 28px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .contact-label {
-      font-size: 0.68rem;
-      font-family: var(--font-mono);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      width: 72px;
-      flex-shrink: 0;
-    }
-    .contact-value {
-      font-size: 0.9rem;
-      color: var(--color-accent);
-      font-weight: 500;
-      word-break: break-all;
-      transition: color var(--transition);
-    }
-    .contact-value:hover { color: var(--color-accent-lt); }
+      .contact-icon {
+        font-size: 1.1rem;
+        width: 28px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .contact-label {
+        font-size: 0.68rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        width: 72px;
+        flex-shrink: 0;
+      }
+      .contact-value {
+        font-size: 0.9rem;
+        color: var(--color-accent);
+        font-weight: 500;
+        word-break: break-all;
+        transition: color var(--transition);
+      }
+      .contact-value:hover {
+        color: var(--color-accent-lt);
+      }
 
-    /* CSS:CONTACT-END */
+      /* CSS:CONTACT-END */
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        FOOTER
     ═══════════════════════════════════════════════════ */
 
-    .site-footer {
-      border-top: 1px solid var(--color-line);
-      padding-block: var(--space-md);
-      background: rgba(15,10,4,0.95);
-    }
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-sm);
-    }
-    .footer-copy {
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      font-family: var(--font-mono);
-    }
-    .footer-copy span { color: var(--color-accent); }
-    .footer-links {
-      display: flex;
-      gap: var(--space-sm);
-      list-style: none;
-    }
-    .footer-link {
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      font-family: var(--font-mono);
-      transition: color var(--transition);
-    }
-    .footer-link:hover { color: var(--color-accent); }
+      .site-footer {
+        border-top: 1px solid var(--color-line);
+        padding-block: var(--space-md);
+        background: rgba(15, 10, 4, 0.95);
+      }
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-sm);
+      }
+      .footer-copy {
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+      }
+      .footer-copy span {
+        color: var(--color-accent);
+      }
+      .footer-links {
+        display: flex;
+        gap: var(--space-sm);
+        list-style: none;
+      }
+      .footer-link {
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        transition: color var(--transition);
+      }
+      .footer-link:hover {
+        color: var(--color-accent);
+      }
 
-
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        CSS:RWD-START
        RWD 媒體查詢（手機優先） — 禁止使用 ID 選擇器
     ═══════════════════════════════════════════════════ */
 
-    @media (min-width: 768px) {
-      .container { padding-inline: var(--space-md); }
+      @media (min-width: 768px) {
+        .container {
+          padding-inline: var(--space-md);
+        }
 
-      .nav-links { display: flex; }
-      .nav-cta { display: inline-block; }
+        .nav-links {
+          display: flex;
+        }
+        .nav-cta {
+          display: inline-block;
+        }
 
-      .about-grid {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: var(--space-lg);
+        .about-grid {
+          flex-direction: row;
+          align-items: flex-start;
+          gap: var(--space-lg);
+        }
+        .about-img-wrap {
+          width: 30%;
+          flex-shrink: 0;
+          max-width: none;
+        }
+        .about-text-block {
+          flex: 1;
+        }
+        .about-meta-row {
+          gap: var(--space-md);
+        }
+
+        .skill-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .projects-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
-      .about-img-wrap {
-        width: 30%;
-        flex-shrink: 0;
-        max-width: none;
+
+      @media (min-width: 1024px) {
+        .projects-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .skill-card-wide {
+          grid-column: span 2;
+        }
       }
-      .about-text-block { flex: 1; }
-      .about-meta-row { gap: var(--space-md); }
 
-      .skill-grid { grid-template-columns: repeat(2, 1fr); }
-      .projects-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+      @media (min-width: 1440px) {
+        .container {
+          max-width: 1180px;
+        }
+      }
 
-    @media (min-width: 1024px) {
-      .projects-grid { grid-template-columns: repeat(3, 1fr); }
-      .skill-card-wide { grid-column: span 2; }
-    }
+      /* CSS:RWD-END */
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="container">
+          <nav class="nav" aria-label="主要導覽">
+            <a href="#hero" class="nav-logo" aria-label="回到頁首">
+              廖昱豪 <span>· GIS × Frontend</span>
+            </a>
+            <ul class="nav-links">
+              <li><a href="#about" class="nav-link">關於我</a></li>
+              <li><a href="#skills" class="nav-link">技能</a></li>
+              <li><a href="#projects" class="nav-link">作品集</a></li>
+              <li><a href="#contact" class="nav-link">聯絡我</a></li>
+            </ul>
+            <a href="#contact" class="btn btn-primary btn-sm nav-cta">聯絡我</a>
+          </nav>
+        </div>
+      </header>
 
-    @media (min-width: 1440px) {
-      .container { max-width: 1180px; }
-    }
-
-    /* CSS:RWD-END */
-
-  </style>
-</head>
-<body>
-
-<div class="page">
-
-  <header class="site-header">
-    <div class="container">
-      <nav class="nav" aria-label="主要導覽">
-        <a href="#hero" class="nav-logo" aria-label="回到頁首">
-          廖昱豪 <span>· GIS × Frontend</span>
-        </a>
-        <ul class="nav-links">
-          <li><a href="#about"    class="nav-link">關於我</a></li>
-          <li><a href="#skills"   class="nav-link">技能</a></li>
-          <li><a href="#projects" class="nav-link">作品集</a></li>
-          <li><a href="#contact"  class="nav-link">聯絡我</a></li>
-        </ul>
-        <a href="#contact" class="btn btn-primary btn-sm nav-cta">聯絡我</a>
-      </nav>
-    </div>
-  </header>
-
-
-  <main>
-
-    <!-- SECTION:HERO-START -->
-    <section id="hero" class="section section-hero" aria-labelledby="hero-heading">
-
-      <div class="hero-bg" aria-hidden="true">
-        <!--
+      <main>
+        <!-- SECTION:HERO-START -->
+        <section
+          id="hero"
+          class="section section-hero"
+          aria-labelledby="hero-heading"
+        >
+          <div class="hero-bg" aria-hidden="true">
+            <!--
           alt：地形等高線地形圖俯視畫面，呈現空間資料視覺化氛圍
           圖片：Unsplash — GeoSpatial / Topographic contour map (Louis Maniquet)
         -->
-        <img
-          class="hero-bg-img"
-          src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1600&auto=format&fit=crop&q=80"
-          alt="地形等高線地圖俯視畫面，呈現空間資料視覺化氛圍"
-          loading="eager"
-        />
-        <div class="hero-bg-overlay"></div>
-      </div>
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="hero-corner hero-corner-tl" aria-hidden="true"></div>
-      <div class="hero-corner hero-corner-br" aria-hidden="true"></div>
+            <img
+              class="hero-bg-img"
+              src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1600&auto=format&fit=crop&q=80"
+              alt="地形等高線地圖俯視畫面，呈現空間資料視覺化氛圍"
+              loading="eager"
+            />
+            <div class="hero-bg-overlay"></div>
+          </div>
+          <div class="hero-glow" aria-hidden="true"></div>
+          <div class="hero-corner hero-corner-tl" aria-hidden="true"></div>
+          <div class="hero-corner hero-corner-br" aria-hidden="true"></div>
 
-      <div class="container">
-        <div class="hero-content">
-          <p class="hero-eyebrow">Personal Portfolio · 個人履歷網站</p>
+          <div class="container">
+            <div class="hero-content">
+              <p class="hero-eyebrow">Personal Portfolio · 個人履歷網站</p>
 
-          <h1 id="hero-heading" class="hero-title">
-            看地圖說故事<br />
-            與 <span class="hero-title-accent">GIS</span> 交織
-          </h1>
+              <h1 id="hero-heading" class="hero-title">
+                看地圖說故事<br />
+                與 <span class="hero-title-accent">GIS</span> 交織
+              </h1>
 
-          <p class="hero-sub">
-            空間資料應用 × 打造俐落的互動體驗<br />
-            從地球科學到前端開發，用每一層圖層說出一個故事。
-          </p>
+              <p class="hero-sub">
+                空間資料應用 × 打造俐落的互動體驗<br />
+                從地球科學到前端開發，用每一層圖層說出一個故事。
+              </p>
 
-          <nav class="hero-bookmark-row" aria-label="履歷快速導覽">
-            <a href="#about"    class="hero-bookmark">📄 學經歷</a>
-            <a href="#about"    class="hero-bookmark">🙋 自傳</a>
-            <a href="#projects" class="hero-bookmark">🗂️ 作品集</a>
-            <a href="#skills"   class="hero-bookmark">🏅 證照</a>
-            <a href="#skills"   class="hero-bookmark">🛠️ 專長</a>
-            <a href="#contact"  class="hero-bookmark">📎 聯絡</a>
-          </nav>
+              <p class="hero-tagline">「從地表資料到螢幕像素，我自己找路。」</p>
+            </div>
+          </div>
+        </section>
+        <!-- SECTION:HERO-END -->
 
-          <p class="hero-tagline">「從地表資料到螢幕像素，我自己找路。」</p>
-        </div>
-      </div>
+        <!-- SECTION:ABOUT-START -->
+        <section
+          id="about"
+          class="section section-about"
+          aria-labelledby="about-heading"
+        >
+          <div class="container">
+            <span class="section-eyebrow">About Me</span>
+            <h2 id="about-heading" class="section-title">關於我</h2>
 
-    </section>
-    <!-- SECTION:HERO-END -->
-
-
-    <!-- SECTION:ABOUT-START -->
-    <section id="about" class="section section-about" aria-labelledby="about-heading">
-      <div class="container">
-        <span class="section-eyebrow">About Me</span>
-        <h2 id="about-heading" class="section-title">關於我</h2>
-
-        <div class="about-grid">
-
-          <div class="about-img-wrap">
-            <!--
+            <div class="about-grid">
+              <div class="about-img-wrap">
+                <!--
               alt：無人機視角俯拍山岳地形，呈現 GIS 空間資料主題
               圖片：Unsplash — Aerial mountain ridge (Matteo Catanese)
             -->
-            <img
-              src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&auto=format&fit=crop&q=80"
-              alt="無人機視角俯拍山岳地形，呈現 GIS 空間資料主題"
-              loading="lazy"
-            />
-          </div>
-
-          <div class="about-text-block">
-            <p>
-              畢業於<strong>地球科學系</strong>，在地理資訊的框架裡找到了自己的語言——
-              空間、座標、圖層，是我理解世界的方式。
-            </p>
-            <p>
-              工作後投入 GIS 實務，負責<strong>登山地圖路徑資料驗證</strong>、
-              <strong>道路管理平台缺失數化</strong>等任務，深刻體驗到「乾淨的資料」
-              是一切視覺敘事的地基。
-            </p>
-            <p>
-              帶著對地圖的熱愛，我開始<strong>自學 QGIS、前端開發</strong>，
-              嘗試讓空間資料以更直覺、更美的方式出現在使用者面前。
-              我相信真正的問題解決者，不只懂工具，更懂怎麼自己找到工具。
-            </p>
-
-            <div class="about-divider"></div>
-
-            <div class="about-meta-row">
-              <div class="about-meta-item">
-                <span class="about-meta-label">學歷</span>
-                <span class="about-meta-value">地球科學系</span>
+                <img
+                  src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&auto=format&fit=crop&q=80"
+                  alt="無人機視角俯拍山岳地形，呈現 GIS 空間資料主題"
+                  loading="lazy"
+                />
               </div>
-              <div class="about-meta-item">
-                <span class="about-meta-label">專長</span>
-                <span class="about-meta-value">GIS × 前端開發</span>
+
+              <div class="about-text-block">
+                <p>
+                  畢業於<strong>地球科學系</strong>，在地理資訊的框架裡找到了自己的語言——
+                  空間、座標、圖層，是我理解世界的方式。
+                </p>
+                <p>
+                  工作後投入 GIS
+                  實務，負責<strong>登山地圖路徑資料驗證</strong>、
+                  <strong>道路管理平台缺失數化</strong
+                  >等任務，深刻體驗到「乾淨的資料」 是一切視覺敘事的地基。
+                </p>
+                <p>
+                  帶著對地圖的熱愛，我開始<strong>自學 QGIS、前端開發</strong>，
+                  嘗試讓空間資料以更直覺、更美的方式出現在使用者面前。
+                  我相信真正的問題解決者，不只懂工具，更懂怎麼自己找到工具。
+                </p>
+
+                <div class="about-divider"></div>
+
+                <div class="about-meta-row">
+                  <div class="about-meta-item">
+                    <span class="about-meta-label">學歷</span>
+                    <span class="about-meta-value">地球科學系</span>
+                  </div>
+                  <div class="about-meta-item">
+                    <span class="about-meta-label">專長</span>
+                    <span class="about-meta-value">GIS × 前端開發</span>
+                  </div>
+                  <div class="about-meta-item">
+                    <span class="about-meta-label">特質</span>
+                    <span class="about-meta-value">自學力 · 問題解決</span>
+                  </div>
+                </div>
               </div>
-              <div class="about-meta-item">
-                <span class="about-meta-label">特質</span>
-                <span class="about-meta-value">自學力 · 問題解決</span>
+            </div>
+          </div>
+        </section>
+        <!-- SECTION:ABOUT-END -->
+
+        <!-- SECTION:SKILLS-START -->
+        <section
+          id="skills"
+          class="section section-skills"
+          aria-labelledby="skills-heading"
+        >
+          <div class="container">
+            <span class="section-eyebrow">Skills &amp; Tools</span>
+            <h2 id="skills-heading" class="section-title">技能專長</h2>
+
+            <div class="skill-grid">
+              <div class="skill-card">
+                <div class="skill-card-header">
+                  <span class="skill-card-icon" aria-hidden="true">🗺️</span>
+                  <span class="skill-card-title">GIS &amp; 空間工具</span>
+                </div>
+                <ul class="skill-list" aria-label="GIS 與空間工具清單">
+                  <li class="skill-item skill-item-highlight">
+                    QGIS — 空間分析
+                  </li>
+                  <li class="skill-item skill-item-highlight">
+                    QGIS — 主題地圖製作
+                  </li>
+                  <li class="skill-item">ArcGIS Pro</li>
+                  <li class="skill-item">GeoJSON / Shapefile</li>
+                  <li class="skill-item">OpenStreetMap</li>
+                  <li class="skill-item">座標系統轉換</li>
+                </ul>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-card-header">
+                  <span class="skill-card-icon" aria-hidden="true">✏️</span>
+                  <span class="skill-card-title">CAD &amp; 設計建模</span>
+                </div>
+                <ul class="skill-list" aria-label="CAD 與設計建模清單">
+                  <li class="skill-item skill-item-highlight">
+                    AutoCAD 2D / 3D
+                  </li>
+                  <li class="skill-item skill-item-highlight">
+                    國際認證證照（政府職訓）
+                  </li>
+                  <li class="skill-item">SolidWorks — 使用經驗</li>
+                  <li class="skill-item">機械設計建模</li>
+                </ul>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-card-header">
+                  <span class="skill-card-icon" aria-hidden="true">💻</span>
+                  <span class="skill-card-title">前端開發</span>
+                </div>
+                <ul class="skill-list" aria-label="前端開發技術清單">
+                  <li class="skill-item skill-item-highlight">
+                    HTML / CSS / JS 基礎
+                  </li>
+                  <li class="skill-item">Vue.js 基本概念</li>
+                  <li class="skill-item">Vibe Coding 輔助開發</li>
+                  <li class="skill-item">GitHub Pages 部署</li>
+                  <li class="skill-item">靜態網頁切版</li>
+                </ul>
+              </div>
+
+              <div class="skill-card skill-card-wide">
+                <div class="skill-card-header">
+                  <span class="skill-card-icon" aria-hidden="true">📋</span>
+                  <span class="skill-card-title">文書 · 資料 · 軟技能</span>
+                </div>
+                <ul class="skill-list" aria-label="文書與軟技能清單">
+                  <li class="skill-item">Word 文書排版</li>
+                  <li class="skill-item">Excel 函數統計</li>
+                  <li class="skill-item">Outlook 收發郵件</li>
+                  <li class="skill-item">資料輸入建檔</li>
+                  <li class="skill-item">文件比對審核</li>
+                  <li class="skill-item skill-item-highlight">自學能力</li>
+                  <li class="skill-item skill-item-highlight">問題解決導向</li>
+                  <li class="skill-item">良好溝通協調</li>
+                </ul>
               </div>
             </div>
           </div>
+        </section>
+        <!-- SECTION:SKILLS-END -->
 
-        </div>
-      </div>
-    </section>
-    <!-- SECTION:ABOUT-END -->
+        <!-- SECTION:PROJECTS-START -->
+        <section
+          id="projects"
+          class="section section-projects"
+          aria-labelledby="projects-heading"
+        >
+          <div class="container">
+            <span class="section-eyebrow">Projects</span>
+            <h2 id="projects-heading" class="section-title">作品集</h2>
 
-
-    <!-- SECTION:SKILLS-START -->
-    <section id="skills" class="section section-skills" aria-labelledby="skills-heading">
-      <div class="container">
-        <span class="section-eyebrow">Skills &amp; Tools</span>
-        <h2 id="skills-heading" class="section-title">技能專長</h2>
-
-        <div class="skill-grid">
-
-          <div class="skill-card">
-            <div class="skill-card-header">
-              <span class="skill-card-icon" aria-hidden="true">🗺️</span>
-              <span class="skill-card-title">GIS &amp; 空間工具</span>
-            </div>
-            <ul class="skill-list" aria-label="GIS 與空間工具清單">
-              <li class="skill-item skill-item-highlight">QGIS — 空間分析</li>
-              <li class="skill-item skill-item-highlight">QGIS — 主題地圖製作</li>
-              <li class="skill-item">ArcGIS Pro</li>
-              <li class="skill-item">GeoJSON / Shapefile</li>
-              <li class="skill-item">OpenStreetMap</li>
-              <li class="skill-item">座標系統轉換</li>
-            </ul>
-          </div>
-
-          <div class="skill-card">
-            <div class="skill-card-header">
-              <span class="skill-card-icon" aria-hidden="true">✏️</span>
-              <span class="skill-card-title">CAD &amp; 設計建模</span>
-            </div>
-            <ul class="skill-list" aria-label="CAD 與設計建模清單">
-              <li class="skill-item skill-item-highlight">AutoCAD 2D / 3D</li>
-              <li class="skill-item skill-item-highlight">國際認證證照（政府職訓）</li>
-              <li class="skill-item">SolidWorks — 使用經驗</li>
-              <li class="skill-item">機械設計建模</li>
-            </ul>
-          </div>
-
-          <div class="skill-card">
-            <div class="skill-card-header">
-              <span class="skill-card-icon" aria-hidden="true">💻</span>
-              <span class="skill-card-title">前端開發</span>
-            </div>
-            <ul class="skill-list" aria-label="前端開發技術清單">
-              <li class="skill-item skill-item-highlight">HTML / CSS / JS 基礎</li>
-              <li class="skill-item">Vue.js 基本概念</li>
-              <li class="skill-item">Vibe Coding 輔助開發</li>
-              <li class="skill-item">GitHub Pages 部署</li>
-              <li class="skill-item">靜態網頁切版</li>
-            </ul>
-          </div>
-
-          <div class="skill-card skill-card-wide">
-            <div class="skill-card-header">
-              <span class="skill-card-icon" aria-hidden="true">📋</span>
-              <span class="skill-card-title">文書 · 資料 · 軟技能</span>
-            </div>
-            <ul class="skill-list" aria-label="文書與軟技能清單">
-              <li class="skill-item">Word 文書排版</li>
-              <li class="skill-item">Excel 函數統計</li>
-              <li class="skill-item">Outlook 收發郵件</li>
-              <li class="skill-item">資料輸入建檔</li>
-              <li class="skill-item">文件比對審核</li>
-              <li class="skill-item skill-item-highlight">自學能力</li>
-              <li class="skill-item skill-item-highlight">問題解決導向</li>
-              <li class="skill-item">良好溝通協調</li>
-            </ul>
-          </div>
-
-        </div>
-      </div>
-    </section>
-    <!-- SECTION:SKILLS-END -->
-
-
-    <!-- SECTION:PROJECTS-START -->
-    <section id="projects" class="section section-projects" aria-labelledby="projects-heading">
-      <div class="container">
-        <span class="section-eyebrow">Projects</span>
-        <h2 id="projects-heading" class="section-title">作品集</h2>
-
-        <div class="projects-grid">
-
-          <!-- 作品一：商業選址 GIS 分析 -->
-          <article class="project-card">
-            <!--
+            <div class="projects-grid">
+              <!-- 作品一：商業選址 GIS 分析 -->
+              <article class="project-card">
+                <!--
               alt：桌面上鋪開的城市道路地圖，搭配筆記與分析工具，呈現商業選址規劃情境
               圖片：Unsplash — City map planning on desk (Adolfo Félix)
             -->
-            <img
-              class="project-thumb"
-              src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&auto=format&fit=crop&q=80"
-              alt="桌面上鋪開的城市道路地圖，搭配分析工具，呈現商業選址規劃情境"
-              loading="lazy"
-            />
-            <div class="project-info">
-              <div class="project-tags">
-                <span class="project-tag">QGIS</span>
-                <span class="project-tag">Open Data</span>
-                <span class="project-tag">空間分析</span>
-                <span class="project-tag">地圖視覺化</span>
-              </div>
-              <h3 class="project-title">空間大數據分析 — 商業選址企劃</h3>
-              <p class="project-desc">
-                整合網路 Open Data 進行商業選址適宜性分析，以 GIS 地圖視覺化呈現分析結果，為決策者提供具空間邏輯的選址建議。
-              </p>
-              <div class="project-links">
-                <span class="project-status-badge">
-                  <span class="project-status-dot active" aria-hidden="true"></span>
-                  已完成
-                </span>
-                <a
-                  href="https://drive.google.com/file/d/1JFGgVaLZgscvyZuYpkUlxq-MzfcP6PVZ/view"
-                  class="btn btn-primary btn-sm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >查看成果 →</a>
-              </div>
-            </div>
-          </article>
+                <img
+                  class="project-thumb"
+                  src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&auto=format&fit=crop&q=80"
+                  alt="桌面上鋪開的城市道路地圖，搭配分析工具，呈現商業選址規劃情境"
+                  loading="lazy"
+                />
+                <div class="project-info">
+                  <div class="project-tags">
+                    <span class="project-tag">QGIS</span>
+                    <span class="project-tag">Open Data</span>
+                    <span class="project-tag">空間分析</span>
+                    <span class="project-tag">地圖視覺化</span>
+                  </div>
+                  <h3 class="project-title">空間大數據分析 — 商業選址企劃</h3>
+                  <p class="project-desc">
+                    整合網路 Open Data 進行商業選址適宜性分析，以 GIS
+                    地圖視覺化呈現分析結果，為決策者提供具空間邏輯的選址建議。
+                  </p>
+                  <div class="project-links">
+                    <span class="project-status-badge">
+                      <span
+                        class="project-status-dot active"
+                        aria-hidden="true"
+                      ></span>
+                      已完成
+                    </span>
+                    <a
+                      href="https://drive.google.com/file/d/1JFGgVaLZgscvyZuYpkUlxq-MzfcP6PVZ/view"
+                      class="btn btn-primary btn-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >查看成果 →</a
+                    >
+                  </div>
+                </div>
+              </article>
 
-          <!-- 作品二：Garmin Trails × ArcGIS Pro -->
-          <article class="project-card">
-            <!--
+              <!-- 作品二：Garmin Trails × ArcGIS Pro -->
+              <article class="project-card">
+                <!--
               alt：登山健行者站在山稜線上，背景為山岳地形，呼應 GPX 登山路徑資料主題
               圖片：Unsplash — Hiker on mountain ridge trail (Toomas Tartes)
             -->
-            <img
-              class="project-thumb"
-              src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&auto=format&fit=crop&q=80"
-              alt="登山健行者站在山稜線上，背景為山岳地形，呼應 GPX 登山路徑資料主題"
-              loading="lazy"
-            />
-            <div class="project-info">
-              <div class="project-tags">
-                <span class="project-tag">ArcGIS Pro</span>
-                <span class="project-tag">SSMS</span>
-                <span class="project-tag">OpenStreetMap</span>
-                <span class="project-tag">GPX</span>
-              </div>
-              <h3 class="project-title">Garmin Trails Populated With ArcGIS Pro</h3>
-              <p class="project-desc">
-                以 GPX 檔案格式與 OpenStreetMap 進行疊圖，透過屬性資料 Join 建立完整的登山路徑資料庫，提升公司圖台資料精確度。
-              </p>
-              <div class="project-links">
-                <span class="project-status-badge">
-                  <span class="project-status-dot" aria-hidden="true"></span>
-                  建置中
-                </span>
-              </div>
-            </div>
-          </article>
+                <img
+                  class="project-thumb"
+                  src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&auto=format&fit=crop&q=80"
+                  alt="登山健行者站在山稜線上，背景為山岳地形，呼應 GPX 登山路徑資料主題"
+                  loading="lazy"
+                />
+                <div class="project-info">
+                  <div class="project-tags">
+                    <span class="project-tag">ArcGIS Pro</span>
+                    <span class="project-tag">SSMS</span>
+                    <span class="project-tag">OpenStreetMap</span>
+                    <span class="project-tag">GPX</span>
+                  </div>
+                  <h3 class="project-title">
+                    Garmin Trails Populating With ArcGIS Pro
+                  </h3>
+                  <p class="project-desc">
+                    以 GPX 檔案格式與 OpenStreetMap 進行疊圖，透過屬性資料 Join
+                    建立完整的登山路徑資料庫，提升公司圖台資料精確度。
+                  </p>
+                  <div class="project-links">
+                    <span class="project-status-badge">
+                      <span
+                        class="project-status-dot active"
+                        aria-hidden="true"
+                      ></span>
+                      已完成
+                    </span>
+                    <a
+                      href="https://haohao419.github.io/gpxmap/"
+                      class="btn btn-primary btn-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >查看成果 →</a
+                    >
+                  </div>
+                </div>
+              </article>
 
-          <!-- 作品三：Vibe Coding 履歷網站 -->
-          <article class="project-card">
-            <!--
+              <!-- 作品三：Vibe Coding 履歷網站 -->
+              <article class="project-card">
+                <!--
               alt：深色主題程式碼編輯器畫面，螢幕上顯示 HTML 與 CSS 網頁前端程式碼
               圖片：Unsplash — Dark theme code editor on monitor (Florian Olivo)
             -->
-            <img
-              class="project-thumb"
-              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80"
-              alt="深色主題程式碼編輯器畫面，螢幕上顯示 HTML 與 CSS 網頁前端程式碼"
-              loading="lazy"
-            />
-            <div class="project-info">
-              <div class="project-tags">
-                <span class="project-tag">HTML / CSS</span>
-                <span class="project-tag">Claude</span>
-                <span class="project-tag">Gemini</span>
-                <span class="project-tag">Vibe Coding</span>
-              </div>
-              <h3 class="project-title">Vibe Coding 前端靜態履歷網站</h3>
-              <p class="project-desc">
-                結合 Vibe Coding 工作流程，用 AI 協作打造並部署個人品牌靜態網頁。從零自學前端，以 Claude、Gemini 輔助開發，持續迭代優化。彩蛋：內含 Google Antigravity 🎈
-              </p>
-              <div class="project-links">
-                <span class="project-status-badge">
-                  <span class="project-status-dot" aria-hidden="true"></span>
-                  建置中
-                </span>
-              </div>
+                <img
+                  class="project-thumb"
+                  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80"
+                  alt="深色主題程式碼編輯器畫面，螢幕上顯示 HTML 與 CSS 網頁前端程式碼"
+                  loading="lazy"
+                />
+                <div class="project-info">
+                  <div class="project-tags">
+                    <span class="project-tag">HTML / CSS</span>
+                    <span class="project-tag">Claude</span>
+                    <span class="project-tag">Gemini</span>
+                    <span class="project-tag">Vibe Coding</span>
+                  </div>
+                  <h3 class="project-title">Vibe Coding 前端靜態履歷網站</h3>
+                  <p class="project-desc">
+                    結合 Vibe Coding 工作流程，用 AI
+                    協作打造並部署個人品牌靜態網頁。從零自學前端，以
+                    Claude、Gemini 輔助開發，持續迭代優化。彩蛋：內含 Google
+                    Antigravity 🎈
+                  </p>
+                  <div class="project-links">
+                    <span class="project-status-badge">
+                      <span
+                        class="project-status-dot"
+                        aria-hidden="true"
+                      ></span>
+                      建置中
+                    </span>
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
+        </section>
+        <!-- SECTION:PROJECTS-END -->
 
+        <!-- SECTION:CONTACT-START -->
+        <section
+          id="contact"
+          class="section section-contact"
+          aria-labelledby="contact-heading"
+        >
+          <div class="container">
+            <span class="section-eyebrow">Contact</span>
+            <h2 id="contact-heading" class="section-title">聯絡我</h2>
+
+            <div class="contact-wrap">
+              <p class="contact-intro">
+                對我的背景或作品有興趣？<br />
+                無論是<strong>工作機會、專案合作</strong>或單純交流，歡迎透過以下方式聯繫。
+              </p>
+
+              <ul class="contact-list" aria-label="聯絡方式清單">
+                <li class="contact-item">
+                  <span class="contact-icon" aria-hidden="true">📧</span>
+                  <span class="contact-label">Email</span>
+                  <a href="mailto:basehao@gmail.com" class="contact-value"
+                    >basehao@gmail.com</a
+                  >
+                </li>
+                <li class="contact-item">
+                  <span class="contact-icon" aria-hidden="true">💼</span>
+                  <span class="contact-label">LinkedIn</span>
+                  <a
+                    href="https://www.linkedin.com/in/%E6%98%B1%E8%B1%AA-%E5%BB%96-0a98442b9/"
+                    class="contact-value"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >廖昱豪 · LinkedIn Profile</a
+                  >
+                </li>
+                <li class="contact-item">
+                  <span class="contact-icon" aria-hidden="true">📱</span>
+                  <span class="contact-label">Phone</span>
+                  <a href="tel:+886901350080" class="contact-value"
+                    >0901-350-080</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- SECTION:CONTACT-END -->
+      </main>
+
+      <footer class="site-footer">
+        <div class="container">
+          <div class="footer-inner">
+            <p class="footer-copy">
+              &copy; 2026 <span>廖昱豪</span> ·
+              從地表資料到螢幕像素，我自己找路。
+            </p>
+            <ul class="footer-links">
+              <li>
+                <a href="mailto:basehao@gmail.com" class="footer-link">Email</a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/%E6%98%B1%E8%B1%AA-%E5%BB%96-0a98442b9/"
+                  class="footer-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >LinkedIn</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </section>
-    <!-- SECTION:PROJECTS-END -->
-
-
-    <!-- SECTION:CONTACT-START -->
-    <section id="contact" class="section section-contact" aria-labelledby="contact-heading">
-      <div class="container">
-        <span class="section-eyebrow">Contact</span>
-        <h2 id="contact-heading" class="section-title">聯絡我</h2>
-
-        <div class="contact-wrap">
-          <p class="contact-intro">
-            對我的背景或作品有興趣？<br />
-            無論是<strong>工作機會、專案合作</strong>或單純交流，歡迎透過以下方式聯繫。
-          </p>
-
-          <ul class="contact-list" aria-label="聯絡方式清單">
-            <li class="contact-item">
-              <span class="contact-icon" aria-hidden="true">📧</span>
-              <span class="contact-label">Email</span>
-              <a href="mailto:basehao@gmail.com" class="contact-value">basehao@gmail.com</a>
-            </li>
-            <li class="contact-item">
-              <span class="contact-icon" aria-hidden="true">💼</span>
-              <span class="contact-label">LinkedIn</span>
-              <a
-                href="https://www.linkedin.com/in/%E6%98%B1%E8%B1%AA-%E5%BB%96-0a98442b9/"
-                class="contact-value"
-                target="_blank"
-                rel="noopener noreferrer"
-              >廖昱豪 · LinkedIn Profile</a>
-            </li>
-            <li class="contact-item">
-              <span class="contact-icon" aria-hidden="true">📱</span>
-              <span class="contact-label">Phone</span>
-              <a href="tel:+886901350080" class="contact-value">0901-350-080</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    <!-- SECTION:CONTACT-END -->
-
-  </main>
-
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <p class="footer-copy">
-          &copy; 2026 <span>廖昱豪</span> · 從地表資料到螢幕像素，我自己找路。
-        </p>
-        <ul class="footer-links">
-          <li><a href="mailto:basehao@gmail.com" class="footer-link">Email</a></li>
-          <li>
-            <a
-              href="https://www.linkedin.com/in/%E6%98%B1%E8%B1%AA-%E5%BB%96-0a98442b9/"
-              class="footer-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >LinkedIn</a>
-          </li>
-        </ul>
-      </div>
+      </footer>
     </div>
-  </footer>
-
-</div>
-
-</body>
+  </body>
 </html>
